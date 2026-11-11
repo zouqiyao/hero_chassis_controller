@@ -1,0 +1,17 @@
+hero_chassis_controller:
+  type: hero_chassis_controller/HeroChassisController
+
+# 我控制的四个电机...
+  joints: 
+    - left_front_wheel_joint
+    - left_back_wheel_joint
+    - right_front_wheel_joint
+    - right_back_wheel_joint
+
+# 轮子的pid 参数
+  wheel_pid:
+    p: 10.0
+    i: 0.1
+    d: 0.5
+    i_clamp_max: 10.0
+    i_clamp_min: -10.0

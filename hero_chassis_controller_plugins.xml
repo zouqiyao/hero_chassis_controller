@@ -1,0 +1,12 @@
+<library path="lib/libhero_chassis_controller">
+
+  <class name="hero_chassis_controller/HeroChassisController"
+         type="hero_chassis_controller::HeroChassisController"
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      Mecanum-wheel hero chassis controller. It expects an EffortJointInterface
+      containing the four wheel joints (left_front/right_front/left_back/right_back).
+    </description>
+  </class>
+
+</library>

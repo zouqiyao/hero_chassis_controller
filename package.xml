@@ -1,20 +1,42 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>ros_package_template</name>
+  <name>hero_chassis_controller</name>
   <version>0.1.0</version>
-  <description>A template for ROS packages.</description>
-  <maintainer email="liaoqiayuan@gmail.com">Qiayuan Liao</maintainer>
+  <description>Mecanum-wheel hero chassis controller for the RoboMaster Gazebo simulation.</description>
+  <maintainer email="yao@example.com">yao</maintainer>
   <license>BSD</license>
-  <author email="liaoqiayuan@gmail.com">Qiayuan Liao</author>
+  <author email="yao@example.com">yao</author>
 
   <!-- buildtool_depend: dependencies of the build process -->
   <buildtool_depend>catkin</buildtool_depend>
-  <!-- build_depend: dependencies only used in source files -->
-  <build_depend>boost</build_depend>
-  <!-- depend: build, export, and execution dependency -->
-  <depend>eigen</depend>
-  <depend>roscpp</depend>
-  <depend>sensor_msgs</depend>
 
+  <!-- build_depend: only needed while building this package -->
   <build_depend>roslint</build_depend>
+
+  <!-- depend: build + export + execution dependency -->
+  <depend>roscpp</depend>
+  <depend>controller_interface</depend>
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>control_toolbox</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <!-- System dependency, found with find_package(Eigen3) in CMakeLists.txt -->
+  <depend>eigen</depend>
+
+  <!-- Runtime dependencies used by launch files, not by the compiled plugin -->
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_ros_control</exec_depend>
+  <exec_depend>rm_gazebo</exec_depend>
+  <exec_depend>rm_description_for_task</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <!-- Tell pluginlib which XML describes the controllers exported by this package -->
+  <export>
+    <controller_interface plugin="${prefix}/hero_chassis_controller_plugins.xml"/>
+  </export>
 </package>
