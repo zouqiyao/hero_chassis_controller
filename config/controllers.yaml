@@ -12,6 +12,6 @@ hero_chassis_controller:
   wheel_pid:
     p: 10.0
     i: 0.1
-    d: 0.5
+    d: 0.1
     i_clamp_max: 10.0
     i_clamp_min: -10.0

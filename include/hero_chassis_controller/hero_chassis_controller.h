@@ -4,6 +4,9 @@
 #include <controller_interface/controller.h>
 #include <control_toolbox/pid.h>
 #include <hardware_interface/joint_command_interface.h>
+#include<mutex>
+#include<geometry_msgs/Twist.h>
+#include <ros/ros.h>
 
 namespace hero_chassis_controller {
 
@@ -20,6 +23,9 @@ class HeroChassisController
 
   void starting(const ros::Time& time) override;
   void stopping(const ros::Time& time) override;
+  void callBack(const geometry_msgs::Twist::ConstPtr& msg);
+  void setpidcommand(const double &target_fl,const double &target_fr,const double &target_bl,
+                     const double &target_br,const ros::Duration &period);
 
  private:
   hardware_interface::JointHandle left_front_wheel_joint_;
@@ -32,7 +38,13 @@ class HeroChassisController
   control_toolbox::Pid pid_bl_;
   control_toolbox::Pid pid_br_; //实例化四个 pid控制类
 
-  double target_vel;
+    double target_vx_;
+    double target_vy_;
+    double target_az_;  //共享指令, 收到第一条 cmd_vel
+    std::mutex cmd_mutex_;
+
+    ros::Subscriber cmd_vel_sub;
+
 };
 
 }  // namespace hero_chassis_controller
