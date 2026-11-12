@@ -7,6 +7,9 @@
 #include<mutex>
 #include<geometry_msgs/Twist.h>
 #include <ros/ros.h>
+#include <nav_msgs/Odometry.h>
+#include <tf2/LinearMath/Quaternion.h> 
+#include<cmath>
 
 namespace hero_chassis_controller {
 
@@ -25,7 +28,9 @@ class HeroChassisController
   void stopping(const ros::Time& time) override;
   void callBack(const geometry_msgs::Twist::ConstPtr& msg);
   void setpidcommand(const double &target_fl,const double &target_fr,const double &target_bl,
-                     const double &target_br,const ros::Duration &period);
+                     const double &target_br,const ros::Duration &period); //pid命令发送
+  void packOdometry(const ros::Time & time,std::string father ,std::string child ,
+                                            double vx , double vy ,double az ,double theta_);
 
  private:
   hardware_interface::JointHandle left_front_wheel_joint_;
@@ -43,8 +48,27 @@ class HeroChassisController
     double target_az_;  //共享指令, 收到第一条 cmd_vel
     std::mutex cmd_mutex_;
 
+    ros::Publisher odom_pub;
     ros::Subscriber cmd_vel_sub;
 
+    double kWheelRadius ;
+    double k ;   //轮子
+
+    double base_sx_;
+    double base_sy_;
+    double base_sz_; //base下的位移向量
+    double base_taz_; //旋转角度
+
+    double odom_sx_;
+    double odom_sy_;
+    double odom_sz_;
+
+    double sum_odom_sx_;
+    double sum_odom_sy_;
+    double sum_odom_sz_;
+    double sum_odom_theta_;
+
+    double pi;
 };
 
 }  // namespace hero_chassis_controller
